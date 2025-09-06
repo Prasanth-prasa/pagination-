@@ -38,7 +38,7 @@
   </style>
 </head>
 <body>
-  <!-- Required Elements -->
+  
   <h1 id="title">Pagination Example</h1>
   <p id="description">This project demonstrates pagination using DOM manipulation.</p>
 
@@ -58,7 +58,7 @@
   <div id="buttons" class="d-flex justify-content-center"></div>
 
   <script>
-    // Sample dataset
+    
     const data = [];
     for (let i = 1; i <= 50; i++) {
       data.push({ id: i, name: "Item " + i });
@@ -93,13 +93,11 @@
 
       const totalPages = Math.ceil(data.length / rowsPerPage);
 
-      // First
       let firstBtn = document.createElement("button");
       firstBtn.textContent = "First";
       firstBtn.onclick = () => { currentPage = 1; update(); };
       buttonsDiv.appendChild(firstBtn);
 
-      // Previous
       let prevBtn = document.createElement("button");
       prevBtn.textContent = "Previous";
       prevBtn.onclick = () => {
@@ -108,7 +106,6 @@
       };
       buttonsDiv.appendChild(prevBtn);
 
-      // Page numbers
       for (let i = 1; i <= totalPages; i++) {
         let btn = document.createElement("button");
         btn.textContent = i;
@@ -117,7 +114,7 @@
         buttonsDiv.appendChild(btn);
       }
 
-      // Next
+     
       let nextBtn = document.createElement("button");
       nextBtn.textContent = "Next";
       nextBtn.onclick = () => {
@@ -125,8 +122,7 @@
         update();
       };
       buttonsDiv.appendChild(nextBtn);
-
-      // Last
+      
       let lastBtn = document.createElement("button");
       lastBtn.textContent = "Last";
       lastBtn.onclick = () => { currentPage = totalPages; update(); };
@@ -138,10 +134,10 @@
       setupButtons();
     }
 
-    // Initialize
     update();
   </script>
   <script src="https://app.zenclass.in/sheets/v1/js/zen/suite/bundle.js"></script>
 
 </body>
+
 </html>
