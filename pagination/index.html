@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination in DOM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    #buttons {
+      margin-top: 20px;
+      gap: 10px;
+    }
+    #buttons button {
+      margin: 0 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background: #f0f0f0;
+    }
+    #buttons button.active {
+      background: #007bff;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Required Elements -->
+  <h1 id="title">Pagination Example</h1>
+  <p id="description">This project demonstrates pagination using DOM manipulation.</p>
+
+  <div class="table-responsive">
+    <table class="table table-bordered" id="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+      </tbody>
+    </table>
+  </div>
+
+  <div id="buttons" class="d-flex justify-content-center"></div>
+
+  <script>
+    // Sample dataset
+    const data = [];
+    for (let i = 1; i <= 50; i++) {
+      data.push({ id: i, name: "Item " + i });
+    }
+
+    const rowsPerPage = 5;
+    let currentPage = 1;
+
+    const tableBody = document.getElementById("table-body");
+    const buttonsDiv = document.getElementById("buttons");
+
+    function displayTable(page) {
+      tableBody.innerHTML = "";
+      let start = (page - 1) * rowsPerPage;
+      let end = start + rowsPerPage;
+      let paginatedItems = data.slice(start, end);
+
+      paginatedItems.forEach(item => {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        td1.textContent = item.id;
+        td2.textContent = item.name;
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tableBody.appendChild(tr);
+      });
+    }
+
+    function setupButtons() {
+      buttonsDiv.innerHTML = "";
+
+      const totalPages = Math.ceil(data.length / rowsPerPage);
+
+      // First
+      let firstBtn = document.createElement("button");
+      firstBtn.textContent = "First";
+      firstBtn.onclick = () => { currentPage = 1; update(); };
+      buttonsDiv.appendChild(firstBtn);
+
+      // Previous
+      let prevBtn = document.createElement("button");
+      prevBtn.textContent = "Previous";
+      prevBtn.onclick = () => {
+        if (currentPage > 1) currentPage--;
+        update();
+      };
+      buttonsDiv.appendChild(prevBtn);
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        let btn = document.createElement("button");
+        btn.textContent = i;
+        if (i === currentPage) btn.classList.add("active");
+        btn.onclick = () => { currentPage = i; update(); };
+        buttonsDiv.appendChild(btn);
+      }
+
+      // Next
+      let nextBtn = document.createElement("button");
+      nextBtn.textContent = "Next";
+      nextBtn.onclick = () => {
+        if (currentPage < totalPages) currentPage++;
+        update();
+      };
+      buttonsDiv.appendChild(nextBtn);
+
+      // Last
+      let lastBtn = document.createElement("button");
+      lastBtn.textContent = "Last";
+      lastBtn.onclick = () => { currentPage = totalPages; update(); };
+      buttonsDiv.appendChild(lastBtn);
+    }
+
+    function update() {
+      displayTable(currentPage);
+      setupButtons();
+    }
+
+    // Initialize
+    update();
+  </script>
+  <script src="https://app.zenclass.in/sheets/v1/js/zen/suite/bundle.js"></script>
+
+</body>
+</html>
